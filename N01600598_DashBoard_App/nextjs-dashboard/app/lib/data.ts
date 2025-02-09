@@ -39,6 +39,8 @@ export async function fetchLatestInvoices() {
       ORDER BY invoices.date DESC
       LIMIT 5`;
 
+      
+      
     const latestInvoices = data.map((invoice) => ({
       ...invoice,
       amount: formatCurrency(invoice.amount),
@@ -68,11 +70,15 @@ export async function fetchCardData() {
       invoiceStatusPromise,
     ]);
 
-    const numberOfInvoices = Number(data[0].count ?? '0');
-    const numberOfCustomers = Number(data[1].count ?? '0');
+    console.log('Card Data fetch completed after 3 seconds.');
+    console.log(data); 
+
+    const numberOfInvoices = Number(data[0][0].count ?? '0');
+const numberOfCustomers = Number(data[1][0].count ?? '0');
     const totalPaidInvoices = formatCurrency(data[2][0].paid ?? '0');
     const totalPendingInvoices = formatCurrency(data[2][0].pending ?? '0');
 
+    console.log('Data returned.'+numberOfInvoices+ "'"+numberOfCustomers+ "'"+ totalPaidInvoices+ "'"+totalPendingInvoices);
     return {
       numberOfCustomers,
       numberOfInvoices,
